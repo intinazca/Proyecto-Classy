@@ -5,6 +5,10 @@
  */
 package modelo;
 
+import control.BaseDatos;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author Usuario
@@ -138,7 +142,22 @@ public class Profesor {
     }
 
     public boolean insertProfesor(String sql) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        boolean t=false;
+        BaseDatos objCon = new BaseDatos();
+
+        if (objCon.crearConexion()) {
+            try {
+                Statement sentencia = objCon.getConexion().createStatement();
+                sentencia.executeUpdate(sql);
+                t=true;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                t= false;
+            }
+        }
+        
+        return t;
     }
 
 }

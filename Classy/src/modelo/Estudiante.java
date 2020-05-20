@@ -5,6 +5,10 @@
  */
 package modelo;
 
+import control.BaseDatos;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author Usuario
@@ -17,7 +21,7 @@ public class Estudiante {
     private String apellido1_estudiante;
     private String apellido2_estudiante;
     private String correo_estudiante;
-    private String fecha_estudiante;
+    private String fecha_nacimiento;
     private String contrasenia_estudiante;
 
     public String getContrasenia_estudiante() {
@@ -28,12 +32,12 @@ public class Estudiante {
         this.contrasenia_estudiante = contrasenia_estudiante;
     }
 
-    public String getFecha_estudiante() {
-        return fecha_estudiante;
+    public String getFecha_nacimiento() {
+        return fecha_nacimiento;
     }
 
-    public void setFecha_estudiante(String fecha_estudiante) {
-        this.fecha_estudiante = fecha_estudiante;
+    public void setFecha_nacimiento(String fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
     }
 
     public String getCorreo_estudiante() {
@@ -85,7 +89,23 @@ public class Estudiante {
     }
 
     public boolean insertEstudiate(String sql) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        boolean t=false;
+        BaseDatos objCon = new BaseDatos();
+
+        if (objCon.crearConexion()) {
+            try {
+                Statement sentencia = objCon.getConexion().createStatement();
+                sentencia.executeUpdate(sql);
+                t=true;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                t= false;
+            }
+        }
+        
+        return t;
+        
     }
 
 }
